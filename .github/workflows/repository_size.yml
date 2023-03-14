@@ -22,7 +22,7 @@ jobs:
 
       - name: List files in repo
         run: |
-          cd EpitechPromo2027/B-DOP-200-NAN-2-1-bschocolatine-thomas.boue
+          cd B-DOP-200-NAN-2-1-bschocolatine-thomas.boue
           ls
           echo "${branch}"
           du -skh --exclude=".git"

@@ -13,7 +13,9 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  - runs-on: ubuntu-latest
-  - name: Run the date command
-  - run: date
+  - build:
+    - runs-on: ubuntu-latest
+    - steps:
+      - name: Run the date command
+      - run: date
 

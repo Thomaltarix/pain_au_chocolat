@@ -20,4 +20,6 @@ jobs:
           repository: EpitechPromo2027/B-DOP-200-NAN-2-1-bschocolatine-thomas.boue
           token: ${{ secrets.PAT }}
       - name: List files in repo
-        run: cd B-DOP-200-NAN-2-1-bschocolatine-thomas.boue
+        run: |
+          ls
+          pwd

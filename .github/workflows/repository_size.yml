@@ -15,14 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
         with:
           repository: EpitechPromo2027/B-DOP-200-NAN-2-1-bschocolatine-thomas.boue
           token: ${{ secrets.PAT }}
-
       - name: List files in repo
-        run: |
-          cd B-DOP-200-NAN-2-1-bschocolatine-thomas.boue
-          ls
-          echo "${branch}"
-          du -skh --exclude=".git"
+        run: cd B-DOP-200-NAN-2-1-bschocolatine-thomas.boue

@@ -19,11 +19,10 @@ jobs:
         with:
           repository: EpitechPromo2027/B-DOP-200-NAN-2-1-bschocolatine-thomas.boue
           token: ${{ secrets.PAT }}
+
       - name: List files in repo
-        run: ls
-
-      - name: Print the branch name
-        run: echo "${branch}"
-
-      - name: i don't know yet
-        run: du -skh --exclude=".git"
+        run: |
+          cd EpitechPromo2027/B-DOP-200-NAN-2-1-bschocolatine-thomas.boue
+          ls
+          echo "${branch}"
+          du -skh --exclude=".git"

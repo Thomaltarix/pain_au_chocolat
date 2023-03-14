@@ -20,5 +20,4 @@ jobs:
           repository: EpitechPromo2027/B-DOP-200-NAN-2-1-bschocolatine-thomas.boue
           token: ${{ secrets.PAT }}
       - name: List files in repo
-        run: |
-          echo "${git branch}"
+        run: echo "Current branch is ${{ github.ref }}"

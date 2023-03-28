@@ -2,25 +2,25 @@ name: Mirroring
 run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
 
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ]
   delete:
     branches: [ "main" ]
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 jobs:
   mirror:
+      name: Mirror to Github
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@v3
+        - name: Checkout
+        uses: actions/checkout@v3
           with:
             fetch-depth: 0
-        - uses: pixta-dev/repository-mirroring-action@v1
+        - name: Mirror to Github
+        uses: pixta-dev/repository-mirroring-action@v3
           with:
             target_repo_url:
               git@github.com:EpitechPromo2027/B-DOP-200-NAN-2-1-bschocolatine-thomas.boue.git
             ssh_private_key:
               ${{ secrets.SSH_KEY }}
-# Mettre des names pour que ça soit propre

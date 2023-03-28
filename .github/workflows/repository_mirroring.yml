@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 jobs:
   mirror:
-      name: Mirror to Github
+      - name: Mirror to Github
       runs-on: ubuntu-latest
       steps:
         - name: Checkout

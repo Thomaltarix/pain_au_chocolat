@@ -41,7 +41,7 @@ jobs:
               file_path=$(echo $line | cut -d ':' -f 1)
               error_line=$(echo $line | cut -d ':' -f 2)
               error_code=$(echo $line | cut -d ':' -f 4)
-              echo "::error file=$file_name, line=$error_line, title=$error_type:: $error_code"
+              echo "::error file=$file_name, title=$error_type coding style error:: $error_code"
           done < $input
 
   # check_program_compilation:

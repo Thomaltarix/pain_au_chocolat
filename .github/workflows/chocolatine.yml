@@ -39,6 +39,7 @@ jobs:
           else
             check_coding_style.result = 'success'
             echo ::error::success
+          fi
 
 
   #   - name: Display coding style errors

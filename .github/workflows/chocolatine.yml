@@ -33,7 +33,7 @@ jobs:
           if [ -s coding-style-reports.log ]
           then
             check_coding_style.result = 'failure'
-            for line in (coding-style-reports.log)
+            cat coding-style-reports.log | while read line
             do
               echo ::error::failure
           else

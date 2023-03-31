@@ -59,7 +59,7 @@ valgrind : re
 vg:
 		rm $(VG)
 
-test_run:
+tests_run:
 		rm -rf unit_tests
 		gcc -o unit_tests $(SRC) $(TESTS) --coverage -lcriterion $(INCLUDE_DIR)
 		./unit_tests

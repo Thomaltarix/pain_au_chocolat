@@ -31,18 +31,18 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Run coding style checker
-      run: |
-      check.sh $(pwd) $(pwd)
-      if [ -s coding-style-reports.log ]
-      then
-        check_coding_style.result = 'failure'
-        for line in (coding-style-reports.log)
-        do
-          echo ::error::failure
-      else
-        check_coding_style.result = 'success'
-        echo ::error::success
+      - name: Run coding style checker
+        run: |
+        check.sh $(pwd) $(pwd)
+        if [ -s coding-style-reports.log ]
+        then
+          check_coding_style.result = 'failure'
+          for line in (coding-style-reports.log)
+          do
+            echo ::error::failure
+        else
+          check_coding_style.result = 'success'
+          echo ::error::success
 
 
   #   - name: Display coding style errors

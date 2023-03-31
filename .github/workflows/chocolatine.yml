@@ -43,7 +43,7 @@ jobs:
             error_code=$(echo $line | cut -d ':' -f 4)
             echo echo "::error file=$file_name,line=$error_line::$error_type coding style error: $file_name $error_code"
         done < $input
-4
+
   # check_program_compilation:
   #   needs: [check_coding_style]
   #   if : ${{ check_coding_style.result == 'success' }}

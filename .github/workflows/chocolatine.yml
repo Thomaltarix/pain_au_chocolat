@@ -99,9 +99,6 @@ jobs:
 
   push_to_mirror:
     needs: [run_tests]
-
-  push_to_mirror:
-    needs: [run_tests]
     name: Push to mirror
     if: github.event_name == 'push'
     runs-on: ubuntu-latest

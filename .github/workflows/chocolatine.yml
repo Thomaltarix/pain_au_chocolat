@@ -33,15 +33,17 @@ jobs:
 
       - name: Display coding style errors
         run: |
-
-            cat coding-style-reports.log | while read line
-            do
-              echo ::error::failure
-              done
-
-
-  #   - name: Display coding style errors
-
+        input="coding-style-reports.log"
+        while read line
+        do
+            error_type=$(echo $line | cut -d ":" -f 3 | cut -d " " -f 2)
+            file_name=$(echo $line | cut -d ":" -f 1)
+            file_path=$(echo $line | cut -d ':' -f 1)
+            error_line=$(echo $line | cut -d ':' -f 2)
+            error_code=$(echo $line | cut -d ':' -f 4)
+            echo echo "::error file=$file_name,line=$error_line::$error_type coding style error: $file_name $error_code"
+        done < $input
+4
   # check_program_compilation:
   #   needs: [check_coding_style]
   #   if : ${{ check_coding_style.result == 'success' }}

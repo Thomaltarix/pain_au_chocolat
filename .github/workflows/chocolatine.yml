@@ -43,35 +43,78 @@ jobs:
               error_code=$(echo $line | cut -d ':' -f 4)
               echo "::error file=$file_name,line=$error_line,title=$error_type coding style error :: $error_code"
           done < $input
+          if [ -s $input ]
+          then
+              exit 1
+          fi
 
-  # check_program_compilation:
-  #   needs: [check_coding_style]
-  #   if : ${{ check_coding_style.result == 'success' }}
-  #     runs-on: epitechcontent/epitest-docker:latest
+  check_program_compilation:
+    needs: [check_coding_style]
+    name: Check program compilation
+    timeout-minutes: 2
+    runs-on: ubuntu-latest
+    container:
+      image: epitechcontent/epitest-docker:latest
+    steps:
+      - name: Check code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-  # run_tests:
-  #   needs: [check_program_compilation]
-  #   if : ${{ check_program_compilation.result == 'success' }}
-  #     runs-on: epitechcontent/epitest-docker:latest
+      - name: Compile programs
+        run: |
+          make
 
-  # push_to_mirror:
-  #   needs: [run_tests]
-  #   if : ${{ run_tests.result == 'success' }}
+      - name: Clean compilation files
+        run: |
+          make clean
 
-  # mirror:
-  #     name: Mirror to Github
-  #     runs-on: ubuntu-latest
-  #     steps:
-  #       - name: Checkout
-  #       uses: actions/checkout@v3
-  #         with:
-  #           fetch-depth: 0
-  #       - name: Mirror to Github
-  #       uses: pixta-dev/repository-mirroring-action@v1
-  #         with:
-  #           target_repo_url:
-  #             ${MIRROR_URL}
-  #           ssh_private_key:
-  #             ${{ secrets.GIT_SSH_PRIVATE_KEY }}
-  # needs: [mirror]
-  # if: ${{ job1.result == 'success' }}
+      - name: Check if programs are compiled
+        run: |
+        for executable in $EXECUTABLES
+        do
+            if [ ! -f $executable ]
+            then
+                echo "::error file=$executable,title=Compilation error :: $executable is not compiled"
+                exit 1
+            fi
+        done
+
+  run_tests:
+    needs: [check_program_compilation]
+    name: Run tests
+    timeout-minutes: 2
+    runs-on: ubuntu-latest
+    container:
+      image: epitechcontent/epitest-docker:latest
+    steps:
+      - name: Check code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Run tests
+        run: |
+          make tests_run
+
+  push_to_mirror:
+    needs: [run_tests]
+
+  push_to_mirror:
+    needs: [run_tests]
+    name: Push to mirror
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+      uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Mirror to Github
+      uses: pixta-dev/repository-mirroring-action@v1
+      with:
+        target_repo_url:
+          ${MIRROR_URL}
+        ssh_private_key:
+          ${{ secrets.GIT_SSH_PRIVATE_KEY }}

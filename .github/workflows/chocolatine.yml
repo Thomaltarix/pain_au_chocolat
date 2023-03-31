@@ -9,13 +9,9 @@ on:
   push:
     branches-ignore:
       - "ga-ignore-*"
-    branches:
-      - "*"
   pull_request:
     branches-ignore:
       - "ga-ignore-*"
-    branches:
-      - "*"
 
   workflow_dispatch:
 

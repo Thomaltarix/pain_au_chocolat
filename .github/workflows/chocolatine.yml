@@ -71,14 +71,14 @@ jobs:
 
       - name: Check if programs are compiled
         run: |
-        for executable in $EXECUTABLES
-        do
-            if [ ! -f $executable ]
-            then
-                echo "::error file=$executable,title=Compilation error :: $executable is not compiled"
-                exit 1
-            fi
-        done
+          for executable in $EXECUTABLES
+          do
+              if [ ! -f $executable ]
+              then
+                  echo "::error file=$executable,title=Compilation error :: $executable is not compiled"
+                  exit 1
+              fi
+          done
 
   run_tests:
     needs: [check_program_compilation]

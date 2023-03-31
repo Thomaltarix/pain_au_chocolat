@@ -30,12 +30,12 @@ jobs:
       - name: Run coding style checker
         run: |
           check.sh $(pwd) $(pwd)
-          if [ -s coding-style-reports.log ]
-          then
+          if [ -s coding-style-reports.log ]; then
             check_coding_style.result = 'failure'
             cat coding-style-reports.log | while read line
             do
               echo ::error::failure
+              done
           else
             check_coding_style.result = 'success'
             echo ::error::success

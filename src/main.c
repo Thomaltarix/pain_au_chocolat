@@ -31,7 +31,7 @@ int main(int ac, char **av)
     line_map = readfile(av[1]);
     if (line_map == NULL)
         return 84;
-    real_map = my_str_to_word_array(line_map, "");
+    real_map = my_str_to_word_array(line_map, "");::
     error = error_handling(ac, av, real_map);
     if (error == 84)
         return 84;

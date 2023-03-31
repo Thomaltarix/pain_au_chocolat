@@ -1,0 +1,80 @@
+name: Mirroring
+run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
+
+env:
+  MIRROR_URL: "git@github.com:EpitechPromo2027/B-DOP-200-NAN-2-1-chocolatine-thomas.boue.git"
+  EXECUTABLES: "gameoflife"
+
+on:
+  push:
+    branches-ignore:
+      - "ga-ignore-*"
+    branches:
+      - "*"
+  pull_request:
+    branches-ignore:
+      - "ga-ignore-*"
+    branches:
+      - "*"
+
+  workflow_dispatch:
+
+jobs:
+  check_coding_style:
+    name: Check coding style
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/epitech/coding-style-checker:latest
+    steps:
+      - name: Check code
+        uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Run coding style checker
+      run: |
+      check.sh $(pwd) $(pwd)
+      if [ -s coding-style-reports.log ]
+      then
+        check_coding_style.result = 'failure'
+        for line in (coding-style-reports.log)
+        do
+          echo ::error::failure
+      else
+        check_coding_style.result = 'success'
+        echo ::error::success
+
+
+  #   - name: Display coding style errors
+
+  # check_program_compilation:
+  #   needs: [check_coding_style]
+  #   if : ${{ check_coding_style.result == 'success' }}
+  #     runs-on: epitechcontent/epitest-docker:latest
+
+  # run_tests:
+  #   needs: [check_program_compilation]
+  #   if : ${{ check_program_compilation.result == 'success' }}
+  #     runs-on: epitechcontent/epitest-docker:latest
+
+  # push_to_mirror:
+  #   needs: [run_tests]
+  #   if : ${{ run_tests.result == 'success' }}
+
+  # mirror:
+  #     name: Mirror to Github
+  #     runs-on: ubuntu-latest
+  #     steps:
+  #       - name: Checkout
+  #       uses: actions/checkout@v3
+  #         with:
+  #           fetch-depth: 0
+  #       - name: Mirror to Github
+  #       uses: pixta-dev/repository-mirroring-action@v1
+  #         with:
+  #           target_repo_url:
+  #             ${MIRROR_URL}
+  #           ssh_private_key:
+  #             ${{ secrets.GIT_SSH_PRIVATE_KEY }}
+  # needs: [mirror]
+  # if: ${{ job1.result == 'success' }}

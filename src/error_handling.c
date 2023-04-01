@@ -7,11 +7,6 @@
 
 #include "proto.h"
 
-void test2(void)
-{
-    return;
-}
-
 static bool is_a_valid_char(char c)
 {
     if (c != '\n' && c != 'X' && c != '.' && c != '\0')

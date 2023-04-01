@@ -7,11 +7,6 @@
 
 #include "proto.h"
 
-void test(void)
-{
-    return;
-}
-
 void free_game(game_t *game, char **real_map)
 {
     for (int index = 0; real_map[index] != NULL; index++) {

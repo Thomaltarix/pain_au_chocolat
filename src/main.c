@@ -38,3 +38,6 @@ int main(int ac, char **av)
     play_game_of_life(real_map, my_getnbr(av[2]));
     return 0;
 }
+
+
+

@@ -131,10 +131,10 @@ jobs:
         uses: Ilshidur/action-discord@0.3.2
         with:
           args:
-          run: |
-            if [ ${{ github.event_name }} == "push" ]
-            then
-              echo "🚀 A push has been deployed to ${{ env.MIRROR_URL }} by ${{ github.actor }} on branch ${{ github.ref }}"
-            else
-              echo "🚀 A pull request has been deployed to ${{ env.MIRROR_URL }} by ${{ github.actor }} on branch ${{ github.ref }}"
-            fi
+          # run: |
+          #   if [ ${{ github.event_name }} == "push" ]
+          #   then
+          #     echo "🚀 A push has been deployed to ${{ env.MIRROR_URL }} by ${{ github.actor }} on branch ${{ github.ref }}"
+          #   else
+          #     echo "🚀 A pull request has been deployed to ${{ env.MIRROR_URL }} by ${{ github.actor }} on branch ${{ github.ref }}"
+          #   fi

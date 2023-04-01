@@ -4,6 +4,7 @@ run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
 env:
   MIRROR_URL: "git@github.com:EpitechPromo2027/B-DOP-200-NAN-2-1-chocolatine-thomas.boue.git"
   EXECUTABLES: "gameoflife"
+  DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
 
 on:
   push:

@@ -4,7 +4,6 @@ run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
 env:
   MIRROR_URL: "git@github.com:EpitechPromo2027/B-DOP-200-NAN-2-1-chocolatine-thomas.boue.git"
   EXECUTABLES: "gameoflife"
-  DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
 
 on:
   push:
@@ -127,13 +126,19 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Discord notification
-        uses: Ilshidur/action-discord@0.3.2
+      - name: Get commit information
+        id: commit-info
+        run: |
+          commit_name=$(git log -1 --pretty=format:"%s")
+          user_name=$(git log -1 --pretty=format:"%an")
+          orga_name=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 1)
+          repo_name=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)
+          echo "::set-output name=commit::$commit_name"
+          echo "::set-output name=user::$user_name"
+          echo "::set-output name=org::$orga_name"
+          echo "::set-output name=repo::$repo_name"
+      - name: Send notification to Discord
+        uses: discord/send-webhook@v1
         with:
-          args:
-            if [ ${{ github.event_name }} == "push" ]
-            then
-              echo "🚀 A push has been deployed to ${{ env.MIRROR_URL }} by ${{ github.actor }} on branch ${{ github.ref }}"
-            else
-              echo "🚀 A pull request has been deployed to ${{ env.MIRROR_URL }} by ${{ github.actor }} on branch ${{ github.ref }}"
-            fi
+          url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          content: "A new commit has been pushed to ${{ steps.commit-info.outputs.org }}/${{ steps.commit-info.outputs.repo }} by ${{ steps.commit-info.outputs.user }}: ${{ steps.commit-info.outputs.commit }}"
